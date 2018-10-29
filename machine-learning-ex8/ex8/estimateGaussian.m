@@ -21,8 +21,10 @@ sigma2 = zeros(n, 1);
 %               should contain variance of the i-th feature.
 %
 
+mu = mean(X);
 
-
+% var(X,1) tells var to normalize X by N (i.e. 1/m)
+sigma2 = var(X,1);
 
 
 

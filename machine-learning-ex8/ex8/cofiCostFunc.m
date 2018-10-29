@@ -40,20 +40,34 @@ Theta_grad = zeros(size(Theta));
 %                     partial derivatives w.r.t. to each element of Theta
 %
 
+% R: movies x users
+% Y: movies x users
+% X: movies x features
+% Theta: users x features
+% predicted_ratings: movies x users
 
+predicted_ratings = X * Theta';
 
+rating_error = predicted_ratings - Y;
+error_factor = R .* rating_error;
+error_factor2 = error_factor .* error_factor;
 
+Theta2 = Theta .* Theta;
+X2 = X .* X;
+cost_reg_theta = (lambda / 2) * sum(sum(Theta2));
+cost_reg_x = (lambda / 2) * sum(sum(X2));
 
+J = (1/2) * sum(sum(error_factor2));
+J = J + cost_reg_theta + cost_reg_x;
 
+grad_reg_theta = lambda * Theta;
+grad_reg_x = lambda * X;
 
+Theta_grad = error_factor' * X;
+X_grad = error_factor * Theta;
 
-
-
-
-
-
-
-
+Theta_grad = Theta_grad + grad_reg_theta;
+X_grad = X_grad + grad_reg_x;
 
 % =============================================================
 
